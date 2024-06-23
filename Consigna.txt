@@ -1,0 +1,41 @@
+Para llegar al 4
+
+[] Realizar una aplicación web que funciona completamente offline. 
+[] interfaz amigable con el usuario, con uso de Service Worker
+[] precaching todos los elementos necesarios para la carga inicial
+[] incluir manifiesto correctamente
+[] navegación principal (home) con listado de artículos / elementos
+[] vista ampliada o detalle de artículos (en subpágina o bien en modal)
+[] uso de persistencia (localStorage) que se vea reflejado en la interacción
+[] al menos un consumo de datos a servidor por GET usando api externa (salvo la PokeApi usada en el parcial 1). Opcionalmente: se puede optar por la creación de una API propia ( como en el ejemplo de la FitoApi visto en clase).
+[] botón de instalación (que se oculte post instalación)
+[] navegación secundaria
+
+
+Para llegar al 8 
+
+[] Realizar una aplicación web que funciona completamente offline. 
+[] uso de estrategia de cacheo dinámico
+[] vista ampliada o detalle de artículos (en subpágina) realizando nuevo fetch.
+[] uso de async/await por lo menos una vez
+[] al menos un envío de datos a servidor por POST (por ejemplo api php)
+[] interacción funcional: si el envío o recepción HTTP falla debería saberlo el usuario, por ejemplo mostrando un mensaje (como un Toast)
+[] Uso de biblioteca CSS usando UI mobile (como Materialize).
+[] Uso básico de IndexedDB o Firebase Firestore
+[] Validación de datos en el back (con fines de testeo).
+[] Uso combinado de promise y asyc-await
+[] Indicar mediante un mensaje los cambios en la conexión (online/offline).
+
+
+Para llegar al 10:
+
+[] Uso apropiado de github para registro de cambios (commit a commit)
+[] Uso apropiado de convenciones de nomenclatura js y estilos.
+[] Uso de Firebase Auth y Firebase Firestore
+[] debe haber algún formulario que esté validado.
+
+
+Plus:
+
+[] Despliegue a entorno productivo (por ejemplo firebase hosting o vercel)
+[] Incluir un login funcional con Firebase Auth y Firebase Firestore
