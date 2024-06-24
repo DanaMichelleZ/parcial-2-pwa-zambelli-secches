@@ -20,17 +20,13 @@ async function obtenerBebidas() {
 function mostrarBebidas(bebidas) {
     if (bebidas) {
         listaBebidas.innerHTML = bebidas.map(bebida => `
-            <div class="bebida">
-                <h2>${bebida.strDrink}</h2>
-                <img src="${bebida.strDrinkThumb}" alt="${bebida.strDrink}">
-            </div>
-        `).join('');
-
-        // Aca hacemos un evento de click we
-
-
-        // 
-        
+        <div class="bebida">
+        <a href="detalle.html?id=${bebida.idDrink}">
+            <h2>${bebida.strDrink}</h2>
+            <img src="${bebida.strDrinkThumb}" alt="${bebida.strDrink}">
+        </a>
+    </div>
+        `).join('');        
     } else {
         listaBebidas.innerHTML = '<p>No se encontraron bebidas que te pongan mas ebrio.</p>';
     }
