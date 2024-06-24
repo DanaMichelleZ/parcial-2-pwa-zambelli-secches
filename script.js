@@ -25,6 +25,12 @@ function mostrarBebidas(bebidas) {
                 <img src="${bebida.strDrinkThumb}" alt="${bebida.strDrink}">
             </div>
         `).join('');
+
+        // Aca hacemos un evento de click we
+
+
+        // 
+        
     } else {
         listaBebidas.innerHTML = '<p>No se encontraron bebidas que te pongan mas ebrio.</p>';
     }
