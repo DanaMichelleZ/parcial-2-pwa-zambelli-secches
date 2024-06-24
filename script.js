@@ -23,7 +23,6 @@ function mostrarBebidas(bebidas) {
             <div class="bebida">
                 <h2>${bebida.strDrink}</h2>
                 <img src="${bebida.strDrinkThumb}" alt="${bebida.strDrink}">
-                <p>${bebida.strInstructions}</p>
             </div>
         `).join('');
     } else {
