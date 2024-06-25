@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h2>${bebida.strDrink}</h2>
                         <img src="${bebida.strDrinkThumb}" alt="${bebida.strDrink}">
                     </a>
-                </div>
-            `).join('');
+                </div>`
+            ).join('');
         } else {
             listaBebidas.innerHTML = '<p>No se encontraron bebidas que te pongan más ebrio.</p>';
         }
@@ -38,4 +38,35 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         obtenerBebidas();
     }
+
+
+
+// BOTÓN DE INSTALACION
+
+//Pre-instalación
+let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+            deferredPrompt = e;
+        botonInst.style.display = 'block';
+
+        botonInst.addEventListener('click', () => {
+            deferredPrompt.prompt();
+        botonInst.style.display = 'none';
+
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('Usuario aceptó la instalación de la PWA');
+            }
+        // Despues de que el usuario lo utilize
+            deferredPrompt = null;
+        });
+    });
+});
+
+//Post-instalación
+    window.addEventListener('appinstalled', (evt) => {
+        console.log('La aplicación se ha instalado.');
+    botonInst.style.display = 'none';
+});
 });
