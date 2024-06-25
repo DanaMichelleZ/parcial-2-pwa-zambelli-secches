@@ -10,19 +10,25 @@ async function obtenerBebidas() {
 
         localStorage.setItem('bebidas', JSON.stringify(data.drinks));
             mostrarBebidas(data.drinks);
-    } catch (error) {
-        console.error('Error, no estás lo suficientemente ebrio', error);
+        } catch (error) {
+            console.error('Error, no estás lo suficientemente ebrio', error);
             listaBebidas.innerHTML = '<p>Error al cargar las bebidas. Toma un shot más e intenta nuevamente más tarde.</p>';
+        }
     }
-}
 
-function mostrarBebidas(bebidas) {
-    if (bebidas) {
-        listaBebidas.innerHTML = bebidas.map(bebida =>
-        `
-            <div class="bebida">
-                <a href="detalle.html?id=${bebida.idDrink}">
-                    <h2>${bebida.strDrink}</h2>
+    function mostrarBebidas(bebidas) {
+        if (bebidas) {
+            listaBebidas.innerHTML = bebidas.map(bebida => `
+                <div class="bebida">
+                    <a href="detalle.html?id=${bebida.idDrink}">
+                        <h2>${bebida.strDrink}</h2>
+                        <img src="${bebida.strDrinkThumb}" alt="${bebida.strDrink}">
+                    </a>
+                </div>`
+            ).join('');
+        } else {
+            listaBebidas.innerHTML = '<p>No se encontraron bebidas que te pongan más ebrio.</p>';
+        }
                     <img src="${bebida.strDrinkThumb}" alt="${bebida.strDrink}">
                  </a>
             </div>
