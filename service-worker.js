@@ -1,4 +1,4 @@
-// service-worker xddd
+// service-worker xd
 
 const CACHE_NAME = 'v1';
 const urlsToCache = [
@@ -11,7 +11,7 @@ const urlsToCache = [
     '/manifiesto.json'
 ];
 
-// Evento instalacion: Precach recurso
+// Evento de instalación: Precachear recursos
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
@@ -21,7 +21,7 @@ self.addEventListener('install', event => {
     );
 });
 
-// Evento de activacion: Limpiar caches viejito
+// Evento de activación: Limpiar cachés antiguas
 self.addEventListener('activate', event => {
     const cacheWhitelist = [CACHE_NAME];
     event.waitUntil(
@@ -37,7 +37,7 @@ self.addEventListener('activate', event => {
     );
 });
 
-// Evento fetch: Responder con recurso cache o hacemo una solicitud a la red we
+// Evento de fetch: Responder con recursos del caché o hacer una solicitud a la red
 self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
