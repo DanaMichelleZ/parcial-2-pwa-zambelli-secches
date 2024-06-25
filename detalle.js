@@ -1,14 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const detalleBebida = document.querySelector('.detalle-bebida');
 
-    // Funcion mostrar detalles bebida por ID
-
     async function obtenerDetalleBebida(id) {
         const apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
 
         try {
             const response = await fetch(apiUrl);
             const data = await response.json();
+            localStorage.setItem(`bebida_${id}`, JSON.stringify(data.drinks[0]));
             mostrarDetalleBebida(data.drinks[0]);
         } catch (error) {
             console.error('Error, muy en pedo', error);
@@ -37,13 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function mostrarIngredientes(bebida) {
         let ingredientes = '';
-        // Lista de ingredientes
         for (let i = 1; i <= 15; i++) {
             const ingrediente = bebida[`strIngredient${i}`];
             const medida = bebida[`strMeasure${i}`];
-
             if (ingrediente) {
-                ingredientes += `<li>${ingrediente} - ${medida}</li>`;
+                ingredientes += `<li>${ingrediente} - ${medida ? medida : ''}</li>`;
             }
         }
         return ingredientes;
@@ -54,7 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const idBebida = urlParams.get('id');
 
     if (idBebida) {
-        obtenerDetalleBebida(idBebida);
+        const bebidaGuardada = localStorage.getItem(`bebida_${idBebida}`);
+        if (bebidaGuardada) {
+            mostrarDetalleBebida(JSON.parse(bebidaGuardada));
+        } else {
+            obtenerDetalleBebida(idBebida);
+        }
     } else {
         detalleBebida.innerHTML = '<p>No se especificó una bebida, te tomaste un jugo tang.</p>';
     }
