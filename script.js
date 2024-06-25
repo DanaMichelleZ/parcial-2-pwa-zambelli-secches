@@ -3,12 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 
-    async function obtenerBebidas() {
-        try {
-            const response = await fetch(apiUrl);
-            const data = await response.json();
+async function obtenerBebidas() {
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
 
-            localStorage.setItem('bebidas', JSON.stringify(data.drinks));
+        localStorage.setItem('bebidas', JSON.stringify(data.drinks));
             mostrarBebidas(data.drinks);
         } catch (error) {
             console.error('Error, no estás lo suficientemente ebrio', error);
@@ -29,9 +29,18 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             listaBebidas.innerHTML = '<p>No se encontraron bebidas que te pongan más ebrio.</p>';
         }
+                    <img src="${bebida.strDrinkThumb}" alt="${bebida.strDrink}">
+                 </a>
+            </div>
+        `
+    ).join('');
+    
+    } else {
+        listaBebidas.innerHTML = '<p>No se encontraron bebidas que te pongan más ebrio.</p>';
     }
+}
 
-    const bebidasGuardadas = localStorage.getItem('bebidas');
+const bebidasGuardadas = localStorage.getItem('bebidas');
     if (bebidasGuardadas) {
         console.log('Cargando bebidas desde localStorage:', JSON.parse(bebidasGuardadas));
         mostrarBebidas(JSON.parse(bebidasGuardadas));
@@ -44,29 +53,29 @@ document.addEventListener('DOMContentLoaded', () => {
 // BOTÓN DE INSTALACION
 
 //Pre-instalación
-let deferredPrompt;
+let botonInstalacion;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
-            deferredPrompt = e;
-        botonInst.style.display = 'block';
+            botonInstalacion = e;
+        btnInst.style.display = 'block';
 
-        botonInst.addEventListener('click', () => {
-            deferredPrompt.prompt();
-        botonInst.style.display = 'none';
+        btnInst.addEventListener('click', () => {
+            botonInstalacion.prompt();
+            btnInst.style.display = 'none';
 
-        deferredPrompt.userChoice.then((choiceResult) => {
+        botonInstalacion.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
-                console.log('Usuario aceptó la instalación de la PWA');
+                console.log('Instalando...');
             }
         // Despues de que el usuario lo utilize
-            deferredPrompt = null;
+            botonInstalacion = null;
         });
     });
 });
 
 //Post-instalación
     window.addEventListener('appinstalled', (evt) => {
-        console.log('La aplicación se ha instalado.');
-    botonInst.style.display = 'none';
+        console.log('La aplicación se instaló exitosamente.');
+    btnInst.style.display = 'none';
 });
 });

@@ -3,7 +3,7 @@ Para llegar al 4
 [] Realizar una aplicación web que funciona completamente offline. 
 [] interfaz amigable con el usuario, con uso de Service Worker
 [] precaching todos los elementos necesarios para la carga inicial
-[X] incluir manifiesto correctamente
+[] incluir manifiesto correctamente
 [X] navegación principal (home) con listado de artículos / elementos
 [] vista ampliada o detalle de artículos (en subpágina o bien en modal)
 [X] uso de persistencia (localStorage) que se vea reflejado en la interacción
