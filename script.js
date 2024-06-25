@@ -29,16 +29,7 @@ async function obtenerBebidas() {
         } else {
             listaBebidas.innerHTML = '<p>No se encontraron bebidas que te pongan más ebrio.</p>';
         }
-                    <img src="${bebida.strDrinkThumb}" alt="${bebida.strDrink}">
-                 </a>
-            </div>
-        `
-    ).join('');
-    
-    } else {
-        listaBebidas.innerHTML = '<p>No se encontraron bebidas que te pongan más ebrio.</p>';
     }
-}
 
 const bebidasGuardadas = localStorage.getItem('bebidas');
     if (bebidasGuardadas) {
