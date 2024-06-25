@@ -5,7 +5,7 @@ Para llegar al 4
 [] precaching todos los elementos necesarios para la carga inicial
 [X] incluir manifiesto correctamente
 [X] navegación principal (home) con listado de artículos / elementos
-[] vista ampliada o detalle de artículos (en subpágina o bien en modal)
+[X] vista ampliada o detalle de artículos (en subpágina o bien en modal)
 [X] uso de persistencia (localStorage) que se vea reflejado en la interacción
 [] al menos un consumo de datos a servidor por GET usando api externa (salvo la PokeApi usada en el parcial 1). Opcionalmente: se puede optar por la creación de una API propia ( como en el ejemplo de la FitoApi visto en clase).
 [X] botón de instalación (que se oculte post instalación)
