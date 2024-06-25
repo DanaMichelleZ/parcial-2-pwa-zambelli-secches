@@ -1,0 +1,32 @@
+{
+    "name": "Catálogo de Cocktails - Parcial 2",
+    "short_name": "Catálogo de Cocktails",
+    "description": "Parcial 2 [DWN3AV] - Una API de cocktails.",
+    "scope": "/",
+    "start_url": "/index.html",
+    "display": "browser",
+    "background_color": "#fff",
+    "theme_color": "#abdeff",
+    "icons": [
+        {
+            "src": "/icons/icono-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/icono-256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/icono-384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/icono-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
