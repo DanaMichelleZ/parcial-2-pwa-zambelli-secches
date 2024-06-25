@@ -1,12 +1,3 @@
-if ('serviceWorker' in navigator) {
-    window.addEventListener('Cargar', () => {
-        navigator.serviceWorker
-            .register('.../sw_cached_pages.js')
-            .then(reg => console.log('Service worker: Registrado'))
-            .catch(err => console.log(`Service worker: Error ${err}`));
-    });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     const listaBebidas = document.querySelector('.lista-bebidas');
 
