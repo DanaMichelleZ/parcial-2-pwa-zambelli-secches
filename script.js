@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const listaBebidas = document.querySelector('.lista-bebidas');
     const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 
+
     async function obtenerBebidas() {
         try {
             const response = await fetch(apiUrl);
