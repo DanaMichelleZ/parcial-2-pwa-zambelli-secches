@@ -1,18 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
     const listaBebidas = document.querySelector('.lista-bebidas');
-
     const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 
-async function obtenerBebidas() {
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        localStorage.setItem('bebidas', JSON.stringify(data.drinks));
-            mostrarBebidas(data.drinks);
+    async function obtenerBebidas() {
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            if (data.drinks) {
+                localStorage.setItem('bebidas', JSON.stringify(data.drinks));
+                mostrarBebidas(data.drinks);
+            } else {
+                listaBebidas.innerHTML = '<p>No se encontraron bebidas disponibles.</p>';
+            }
         } catch (error) {
-            console.error('Error, no estás lo suficientemente ebrio', error);
-            listaBebidas.innerHTML = '<p>Error al cargar las bebidas. Toma un shot más e intenta nuevamente más tarde.</p>';
+            console.error('Error al obtener las bebidas:', error);
+            listaBebidas.innerHTML = '<p>Error al cargar las bebidas. Por favor, verificá tu conexión a internet.</p>';
         }
     }
 
@@ -27,58 +29,52 @@ async function obtenerBebidas() {
                 </div>`
             ).join('');
         } else {
-            listaBebidas.innerHTML = '<p>No se encontraron bebidas que te pongan más ebrio.</p>';
+            listaBebidas.innerHTML = '<p>404 bebida not found.</p>';
         }
     }
 
 const bebidasGuardadas = localStorage.getItem('bebidas');
     if (bebidasGuardadas) {
-        console.log('Cargando bebidas desde localStorage:', JSON.parse(bebidasGuardadas));
         mostrarBebidas(JSON.parse(bebidasGuardadas));
     } else {
         obtenerBebidas();
-    }
+}
 
-
-
-// BOTÓN DE INSTALACION
-
-//Pre-instalación
+// Botón de instalación
 let botonInstalacion;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
-            botonInstalacion = e;
+        botonInstalacion = e;
+        const btnInst = document.getElementById('btnInst');
         btnInst.style.display = 'block';
 
         btnInst.addEventListener('click', () => {
             botonInstalacion.prompt();
-            btnInst.style.display = 'none';
-
-        botonInstalacion.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('Instalando...');
-            }
-        // Despues de que el usuario lo utilize
-            botonInstalacion = null;
+        btnInst.style.display = 'none';
+            botonInstalacion.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('Instalando...');
+                } botonInstalacion = null;
         });
     });
 });
 
-//Post-instalación
-    window.addEventListener('appinstalled', (evt) => {
+// Post-intalación
+    window.addEventListener('appinstalled', () => {
         console.log('La aplicación se instaló exitosamente.');
-    btnInst.style.display = 'none';
-});
-
-
-// Registramo' el service worker owo
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js').then(registration => {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, error => {
-            console.log('ServiceWorker registration failed: ', error);
-        });
+        const btnInst = document.getElementById('btnInst');
+        btnInst.style.display = 'none';
     });
-}
+
+
+// Registramos SWorker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js').then(registration => {
+                console.log('Service Worker registrado exitosamente: ', registration.scope);
+            }, error => {
+                console.log('Service Worker registro fallido: ', error);
+            });
+        });
+    }
 });
