@@ -1,7 +1,7 @@
 // service-worker xd
 
-const CACHE_NAME = 'v1';
-const urlsToCache = [
+const cacheTragos = 'v1';
+const fuenteCache = [
     '/',
     '/index.html',
     '/detalle.html',
@@ -14,22 +14,22 @@ const urlsToCache = [
 // Evento de instalación: Precachear recursos
 self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open(CACHE_NAME)
+        caches.open(cacheTragos)
             .then(cache => {
-                return cache.addAll(urlsToCache);
+                return cache.addAll(fuenteCache);
             })
     );
 });
 
 // Evento de activación: Limpiar cachés antiguas
 self.addEventListener('activate', event => {
-    const cacheWhitelist = [CACHE_NAME];
+    const cacheWhitelist = [cacheTragos];
     event.waitUntil(
-        caches.keys().then(cacheNames => {
+        caches.keys().then(cacheNombres => {
             return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (cacheWhitelist.indexOf(cacheName) === -1) {
-                        return caches.delete(cacheName);
+                cacheNombres.map(cacheNombres => {
+                    if (cacheWhitelist.indexOf(cacheNombres) === -1) {
+                        return caches.delete(cacheNombres);
                     }
                 })
             );
