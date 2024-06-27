@@ -1,7 +1,29 @@
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js').then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }).catch(error => {
+            console.error('ServiceWorker registration failed:', error);
+        });
+    });
+  }
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/js/service-worker.js').then(registro => {
+            console.log('Registro de ServiceWorker exitoso con alcance: ', registro.scope);
+        }).catch(error => {
+            console.error('El registro de ServiceWorker falló:', error);
+        });
+        window.addEventListener('offline', () => {
+            mostrarNotificacionOffline();
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const listaBebidas = document.querySelector('.lista-bebidas');
     const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-
 
     async function obtenerBebidas() {
         try {
@@ -70,15 +92,4 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnInst = document.getElementById('btnInst');
         btnInst.style.display = 'none';
     });
-
-    // Registro del Service Worker
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js').then(registration => {
-                console.log('Service Worker registrado exitosamente: ', registration.scope);
-            }, error => {
-                console.log('Service Worker registro fallido: ', error);
-            });
-        });
-    }
 });

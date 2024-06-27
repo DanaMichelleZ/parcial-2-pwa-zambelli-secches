@@ -10,9 +10,9 @@ self.addEventListener('install', event => {
                     '/',
                     '/index.html',
                     '/detalle.html',
-                    '/style.css',
-                    '/script.js',
-                    '/detalle.js',
+                    '/css/style.css',
+                    '/js/script.js',
+                    '/js/detalle.js',
                     '/manifiesto.json'
                 ]);
             })
