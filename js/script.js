@@ -10,11 +10,14 @@ if ('serviceWorker' in navigator) {
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/js/service-worker.js').then(registro => {
-            console.log('Registro de ServiceWorker exitoso con alcance: ', registro.scope);
-        }).catch(error => {
-            console.error('El registro de ServiceWorker falló:', error);
+        navigator.serviceWorker.register('service-worker.js')
+        .then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(error => {
+            console.error('ServiceWorker registration failed:', error);
         });
+
         window.addEventListener('offline', () => {
             mostrarNotificacionOffline();
         });

@@ -1,10 +1,10 @@
 // service-worker xd
 
-const cacheTragos = 'v1';
+const CACHE_NAME = 'v1';
 
 self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open(cacheTragos)
+        caches.open(CACHE_NAME)
             .then(cache => {
                 return cache.addAll([
                     '/',
@@ -21,29 +21,17 @@ self.addEventListener('install', event => {
 });
 
 
-// Evento de instalación: Precachear recursos
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(cacheTragos)
-            .then(cache => {
-                return cache.addAll(fuenteCache);
-            })
-    );
-});
-
-// Evento de activación: Limpiar cachés antiguas
 self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
-                cacheNames.filter(cacheName => cacheName !== cacheTragos)
+                cacheNames.filter(cacheName => cacheName !== CACHE_NAME)
                     .map(cacheName => caches.delete(cacheName))
             );
         })
     );
 });
 
-// Evento de fetch: Responder con recursos del caché o hacer una solicitud a la red
 self.addEventListener('fetch', event => {
     const { request } = event;
 
@@ -68,7 +56,7 @@ self.addEventListener('fetch', event => {
 
                         const responseToCache = response.clone();
 
-                        caches.open(cacheTragos)
+                        caches.open(CACHE_NAME)
                             .then(cache => {
                                 cache.put(request, responseToCache);
                             });
