@@ -1,6 +1,6 @@
 Para llegar al 4
 
-[] Realizar una aplicación web que funciona completamente offline. 
+[X] Realizar una aplicación web que funciona completamente offline. 
 [] interfaz amigable con el usuario, con uso de Service Worker
 [X] precaching todos los elementos necesarios para la carga inicial
 [X] incluir manifiesto correctamente
