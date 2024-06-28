@@ -1,12 +1,12 @@
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js')
-            .then(registration => {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            })
-            .catch(error => {
-                console.error('ServiceWorker registration failed:', error);
-            });
+        navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(error => {
+            console.error('ServiceWorker registration failed: ', error);
+        });
     });
 }
 
@@ -70,11 +70,13 @@ let botonInstalacion;
         btnInst.style.display = 'block';
 
         btnInst.addEventListener('click', () => {
-            botonInstalacion.prompt();
             btnInst.style.display = 'none';
+            botonInstalacion.prompt();
             botonInstalacion.userChoice.then((choiceResult) => {
                 if (choiceResult.outcome === 'accepted') {
                     console.log('Instalando...');
+                } else {
+                    console.log('Usuario rechazó la instalación');
                 }
                 botonInstalacion = null;
             });
@@ -82,9 +84,7 @@ let botonInstalacion;
     });
 
 // Post-intalación
-    window.addEventListener('appinstalled', () => {
-        console.log('La aplicación se instaló exitosamente.');
-        const btnInst = document.getElementById('btnInst');
-        btnInst.style.display = 'none';
+window.addEventListener('appinstalled', (event) => {
+    console.log('PWA ha sido instalada', event);
     });
 });
