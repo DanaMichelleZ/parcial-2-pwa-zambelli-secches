@@ -1,26 +1,12 @@
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js').then(registration => {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }).catch(error => {
-            console.error('ServiceWorker registration failed:', error);
-        });
-    });
-  }
-
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js')
-        .then(registration => {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        })
-        .catch(error => {
-            console.error('ServiceWorker registration failed:', error);
-        });
-
-        window.addEventListener('offline', () => {
-            mostrarNotificacionOffline();
-        });
+            .then(registration => {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(error => {
+                console.error('ServiceWorker registration failed:', error);
+            });
     });
 }
 
@@ -47,30 +33,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function mostrarBebidas(bebidas) {
-        listaBebidas.innerHTML = bebidas.map(bebida => `
-            <div class="bebida">
-                <a href="detalle.html?id=${bebida.idDrink}">
-                    <h2>${bebida.strDrink}</h2>
-                    <img src="${bebida.strDrinkThumb}" alt="${bebida.strDrink}">
-                </a>
-            </div>`
-        ).join('');
+function mostrarBebidas(bebidas) {
+    let bebidasHTML = '';
+        for (let bebida of bebidas) {
+            bebidasHTML += `
+                <div class="bebida">
+                    <a href="detalle.html?id=${bebida.idDrink}">
+                        <h2>${bebida.strDrink}</h2>
+                        <img src="${bebida.strDrinkThumb}" alt="${bebida.strDrink}">
+                    </a>
+                </div>`;
+        if (bebida.strDrink.toLowerCase() === 'victor') {
+            break;
+        }
     }
+    listaBebidas.innerHTML = bebidasHTML;
+}
 
-    function mostrarError(mensaje) {
-        listaBebidas.innerHTML = `<p>${mensaje}</p>`;
-    }
+function mostrarError(mensaje) {
+    listaBebidas.innerHTML = `<p>${mensaje}</p>`;
+}
 
-    const bebidasGuardadas = localStorage.getItem('bebidas');
+const bebidasGuardadas = localStorage.getItem('bebidas');
     if (bebidasGuardadas) {
         mostrarBebidas(JSON.parse(bebidasGuardadas));
     } else {
         obtenerBebidas();
     }
 
-    // Botón de instalación
-    let botonInstalacion;
+// Botón de instalación
+let botonInstalacion;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         botonInstalacion = e;
@@ -89,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Post-intalación
+// Post-intalación
     window.addEventListener('appinstalled', () => {
         console.log('La aplicación se instaló exitosamente.');
         const btnInst = document.getElementById('btnInst');
