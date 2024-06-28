@@ -1,3 +1,15 @@
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(error => {
+            console.error('ServiceWorker registration failed: ', error);
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const detalleBebida = document.querySelector('.detalle-bebida');
 
@@ -11,14 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const data = await response.json();
             if (data.drinks && data.drinks.length > 0) {
-                localStorage.setItem(`bebida_${id}`, JSON.stringify(data.drinks[0]));
-                mostrarDetalleBebida(data.drinks[0]);
+                const bebida = data.drinks[0];
+                localStorage.setItem(`bebida_${id}`, JSON.stringify(bebida));
+                mostrarDetalleBebida(bebida);
             } else {
                 mostrarError('No se encontraron detalles de la bebida.');
             }
         } catch (error) {
             console.error('Error al obtener los detalles de la bebida:', error);
-            mostrarError('Error al cargar los detalles de la bebida. Verificá tu conexión a internet.');
+            mostrarError('Error al cargar los detalles de la bebida. Verifica tu conexión a internet.');
         }
     }
 

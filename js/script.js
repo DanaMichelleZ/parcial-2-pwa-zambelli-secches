@@ -12,7 +12,7 @@ if ('serviceWorker' in navigator) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const listaBebidas = document.querySelector('.lista-bebidas');
-    const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+    const apiUrl = 'https://www.thecocktaildb.com/api.php';
 
     async function obtenerBebidas() {
         try {
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('bebidas', JSON.stringify(data.drinks));
                 mostrarBebidas(data.drinks);
             } else {
-                mostrarError('No se encontraron bebidas disponibles.');
+                mostrarError('No se encontró la bebida.');
             }
         } catch (error) {
             console.error('Error al obtener las bebidas:', error);

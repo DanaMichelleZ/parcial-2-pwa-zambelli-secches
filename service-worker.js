@@ -1,5 +1,3 @@
-// service-worker xd
-
 const CACHE_NAME = 'v1';
 
 self.addEventListener('install', event => {
@@ -13,13 +11,16 @@ self.addEventListener('install', event => {
                     '/css/style.css',
                     '/js/script.js',
                     '/js/detalle.js',
-                    '/manifiesto.json'
+                    '/manifiesto.json',
+                    '/icons/icono-192.png',
+                    '/icons/icono-256.png',
+                    '/icons/icono-384.png',
+                    '/icons/icono-512.png'
                 ]);
             })
             .then(() => self.skipWaiting())
     );
 });
-
 
 self.addEventListener('activate', event => {
     event.waitUntil(
@@ -45,17 +46,13 @@ self.addEventListener('fetch', event => {
                 if (response) {
                     return response;
                 }
-
                 const fetchRequest = request.clone();
-
                 return fetch(fetchRequest)
                     .then(response => {
                         if (!response || response.status !== 200 || response.type !== 'basic') {
                             return response;
                         }
-
                         const responseToCache = response.clone();
-
                         caches.open(CACHE_NAME)
                             .then(cache => {
                                 cache.put(request, responseToCache);
