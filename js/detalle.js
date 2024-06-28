@@ -1,15 +1,3 @@
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        })
-        .catch(error => {
-            console.error('ServiceWorker registration failed: ', error);
-        });
-    });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     const detalleBebida = document.querySelector('.detalle-bebida');
 
@@ -31,7 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error('Error al obtener los detalles de la bebida:', error);
-            mostrarError('Error al cargar los detalles de la bebida. Verifica tu conexión a internet.');
+            const bebidaGuardada = localStorage.getItem(`bebida_${id}`);
+            if (bebidaGuardada) {
+                mostrarDetalleBebida(JSON.parse(bebidaGuardada));
+            } else {
+                mostrarError('No se pudo cargar los detalles de la bebida. Verifica tu conexión a internet.');
+            }
         }
     }
 
@@ -70,12 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const idBebida = urlParams.get('id');
 
     if (idBebida) {
-        const bebidaGuardada = localStorage.getItem(`bebida_${idBebida}`);
-        if (bebidaGuardada) {
-            mostrarDetalleBebida(JSON.parse(bebidaGuardada));
-        } else {
-            obtenerDetalleBebida(idBebida);
-        }
+        obtenerDetalleBebida(idBebida);
     } else {
         mostrarError('No se especificó una bebida válida.');
     }

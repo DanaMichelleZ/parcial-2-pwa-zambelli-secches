@@ -1,28 +1,36 @@
 const CACHE_NAME = 'v1';
 
+const urlsToCache = [
+    '/',
+    '/index.html',
+    '/detalle.html',
+    '/css/styles.css',
+    '/js/app.js',
+    '/js/detalle.js',
+    '/manifest.json',
+    '/icons/icon-192.png',
+    '/icons/icon-256.png',
+    '/icons/icon-384.png',
+    '/icons/icon-512.png'
+];
+
 self.addEventListener('install', event => {
+    console.log('Service worker instalado');
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => {
-                return cache.addAll([
-                    '/',
-                    '/index.html',
-                    '/detalle.html',
-                    '/css/style.css',
-                    '/js/script.js',
-                    '/js/detalle.js',
-                    '/manifiesto.json',
-                    '/icons/icono-192.png',
-                    '/icons/icono-256.png',
-                    '/icons/icono-384.png',
-                    '/icons/icono-512.png'
-                ]);
+                console.log('Cache abierto');
+                return cache.addAll(urlsToCache);
             })
-            .then(() => self.skipWaiting())
+            .then(() => {
+                console.log('Caching completado');
+                self.skipWaiting();
+            })
     );
 });
 
 self.addEventListener('activate', event => {
+    console.log('Service worker activado');
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
@@ -34,32 +42,43 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+    console.log('Fetch interrumpido:', event.request.url);
+
     const { request } = event;
 
-    if (request.url.startsWith('chrome-extension://')) {
-        return;
-    }
-
-    event.respondWith(
-        caches.match(request)
-            .then(response => {
-                if (response) {
-                    return response;
-                }
-                const fetchRequest = request.clone();
-                return fetch(fetchRequest)
-                    .then(response => {
-                        if (!response || response.status !== 200 || response.type !== 'basic') {
-                            return response;
-                        }
-                        const responseToCache = response.clone();
-                        caches.open(CACHE_NAME)
-                            .then(cache => {
-                                cache.put(request, responseToCache);
-                            });
-
+    if (request.url.startsWith(self.location.origin)) {
+        event.respondWith(
+            caches.match(request)
+                .then(response => {
+                    if (response) {
+                        console.log('Respuesta encontrada en caché para:', event.request.url);
                         return response;
-                    });
-            })
-    );
+                    }
+                    const fetchRequest = request.clone();
+                    return fetch(fetchRequest)
+                        .then(response => {
+                            if (!response || response.status !== 200 || response.type !== 'basic') {
+                                console.log('Respuesta inválida:', response);
+                                return response;
+                            }
+                            const responseToCache = response.clone();
+                            caches.open(CACHE_NAME)
+                                .then(cache => {
+                                    console.log('Guardando respuesta en caché para:', event.request.url);
+                                    cache.put(request, responseToCache);
+                                });
+
+                            return response;
+                        })
+                        .catch(error => {
+                            console.error('Error fetch:', error);
+                            throw error;
+                        });
+                })
+                .catch(error => {
+                    console.error('Error al recuperar desde caché:', error);
+                    return caches.match('/offline.html');
+                })
+        );
+    }
 });
