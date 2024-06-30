@@ -12,7 +12,7 @@ if ('serviceWorker' in navigator) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const listaBebidas = document.querySelector('.lista-bebidas');
-    const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita';
+    const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 
     async function obtenerBebidas() {
         try {
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             botonInstalacion.prompt();
             botonInstalacion.userChoice.then((choiceResult) => {
                 if (choiceResult.outcome === 'accepted') {
-                    console.log('Instalando...');
+                    console.log('Aplicación instalada...');
                 } else {
                     console.log('Usuario rechazó la instalación');
                 }
