@@ -20,11 +20,14 @@ self.addEventListener('install', event => {
         caches.open(CACHE_NAME)
             .then(cache => {
                 console.log('Cache abierto');
-                return cache.addAll(urlsToCache);
-            })
-            .then(() => {
-                console.log('Caching completado');
-                self.skipWaiting();
+                return cache.addAll(urlsToCache)
+                    .then(() => {
+                        console.log('Caching completado');
+                        self.skipWaiting();
+                    })
+                    .catch(error => {
+                        console.error('Error al añadir recursos al caché:', error);
+                    });
             })
     );
 });
@@ -51,7 +54,7 @@ self.addEventListener('fetch', event => {
             caches.match(request)
                 .then(response => {
                     if (response) {
-                        console.log('Respuesta encontrada en caché para:', event.request.url);
+                        console.log('Respuesta encontrada:', event.request.url);
                         return response;
                     }
                     const fetchRequest = request.clone();
@@ -64,7 +67,7 @@ self.addEventListener('fetch', event => {
                             const responseToCache = response.clone();
                             caches.open(CACHE_NAME)
                                 .then(cache => {
-                                    console.log('Guardando respuesta en caché para:', event.request.url);
+                                    console.log('Guardando respuesta:', event.request.url);
                                     cache.put(request, responseToCache);
                                 });
 
